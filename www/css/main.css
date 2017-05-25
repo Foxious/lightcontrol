@@ -1,0 +1,52 @@
+.wheel {
+  margin: 5em;
+  border-radius: 50%;
+  width: 15em;
+  height: 15em;
+  position: relative;
+  overflow: hidden;
+}
+
+.blend {
+  -webkit-filter: blur(1em);
+}
+
+.wheel div {
+  width: 15em;
+  height: 15em;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+}
+
+.wedge {
+  background-color: red;
+  width: 15em;
+  height: 15em;
+  clip-path: polygon(50% 0, 50% 50%, 136.6025% 0); /* sin 60 deg */
+}
+
+.red {
+  background-color: red;
+}
+
+.yellow {
+  background-color: #ff0;
+}
+
+.green {
+  background-color: #0f0;
+}
+
+.teal {
+  background-color: #0ff
+}
+
+.blue {
+  background-color: #00f;
+}
+
+.purple {
+  background-color: #f0f;
+}
