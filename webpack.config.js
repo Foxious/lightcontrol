@@ -2,6 +2,7 @@ const path = require('path');
 
 module.exports = {
   context: path.join(__dirname, 'src'),
+  devtool: 'eval-source-map',
   entry: [
     './main.js',
   ],
@@ -19,6 +20,6 @@ module.exports = {
     ]
   },
   resolve: {
-    modules: [ paths.join(__dirname, 'node_modules') ]
+    modules: [ path.join(__dirname, 'node_modules') ]
   }
 }
