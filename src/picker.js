@@ -1,19 +1,8 @@
 import React from 'react';
-import { CustomPicker } from 'react-color';
-import { ChromePicker } from 'react-color';
-
-import { Hue } from 'react-color/lib/components/common';
-
-Array.range = (size) => new Array(size).fill().map((e, i) => i)
-
-Array.repeat = (size, value)  => new Array(size).fill(value)
-
-Array.prototype.tap = function(c) {
-  this.forEach(c);
-  return this;
-}
+import ArrayPolyfill from './array';
 
 const fromEuc = (val) => 50 + val * 50
+
 const clip = (angle) =>`polygon(50% 50%, 100% 50%, ${fromEuc(Math.cos(angle))}% ${fromEuc(-Math.sin(angle))}%)`
 
 const colorFromAngle = (step, angle) => {
@@ -48,7 +37,7 @@ const colorFromAngle = (step, angle) => {
 const Wedge = (props) => <div style={{backgroundColor: colorFromAngle(props.step, props.angle), clipPath: clip(props.angle)}}> </div>
 
 const Rotate = (props) =>
-  <div className="shade" style={{transform: `rotate(${props.angle}rad)`}} >{props.children}</div>
+  <div style={{transform: `rotate(${props.angle}rad)`}} >{props.children}</div>
 
 const Wheel = (props) =>
   <div className="wheel">
@@ -62,4 +51,4 @@ const Wheel = (props) =>
 const Picker = () =>
   <Wheel sections={48} />
 
-export default CustomPicker(Picker);
+export default Picker;
