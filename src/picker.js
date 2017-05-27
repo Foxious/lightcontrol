@@ -21,24 +21,24 @@ const colorFromAngle = (step, angle) => {
   const hc = (step * angle) / h;
   console.log("hc is ", hc);
 
-  const scaleWith = (val) => val * 100
-  const scaleAgainst = (val) => scaleWith(1 - val)
+  const scaleWith = (val) => (val % 1) * 100
+  const scaleAgainst = (val) => (1 - (val % 1)) * 100
 
   let r = 0, b = 0, g = 0;
-  if ( hc <= 1) {
+  if (hc < 1) {
     r = 100;
     g = scaleWith(hc);
-  } else if (hc <= 2) {
-    r = scaleAgainst(hc - 1);
+  } else if (hc < 2) {
+    r = scaleAgainst(hc);
     g = 100;
-  } else if (hc <= 3) {
+  } else if (hc < 3) {
     g = 100
-    b = scaleWith(hc - 2);
-  } else if (hc <= 4) {
-    g = scaleAgainst(hc - 3);
+    b = scaleWith(hc);
+  } else if (hc < 4) {
+    g = scaleAgainst(hc);
     b = 100;
-  } else if (hc <= 5) {
-    r = scaleWith(hc - 4)
+  } else if (hc < 5) {
+    r = scaleWith(hc)
     b = 100;
   } else {
     r = 100;
@@ -63,6 +63,6 @@ const Wheel = (props) =>
   </div>
 
 const Picker = () =>
-  <Wheel sections={96} />
+  <Wheel sections={12} />
 
 export default CustomPicker(Picker);
