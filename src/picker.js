@@ -54,12 +54,12 @@ const Wheel = (props) =>
   <div className="wheel">
   {Array.repeat(props.sections, 2 * Math.PI / props.sections)
     .map((a, i) =>
-        <Rotate angle={a * -i}>
+        <Rotate angle={a * -(i - 0.5)}>
             <Wedge step={i} angle={a} />
         </Rotate>)}
   </div>
 
 const Picker = () =>
-  <Wheel sections={12} />
+  <Wheel sections={48} />
 
 export default CustomPicker(Picker);
