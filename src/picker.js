@@ -1,9 +1,23 @@
 import React from 'react';
 import ArrayPolyfill from './array';
 
-const fromEuc = (val) => 50 + val * 50
+const Picker = () =>
+  <Wheel sections={360} />
 
-const clip = (angle) =>`polygon(50% 50%, 100% 50%, ${fromEuc(Math.cos(angle))}% ${fromEuc(-Math.sin(angle))}%)`
+const Wheel = (props) =>
+  <div className="wheel">
+  {Array.repeat(props.sections, 2 * Math.PI / props.sections)
+    .map((a, i) =>
+        <Rotate angle={a * -(i - 0.5)}>
+            <Wedge step={i} angle={a} />
+        </Rotate>)}
+  </div>
+
+const Rotate = (props) =>
+  <div style={{transform: `rotate(${props.angle}rad)`}} >{props.children}</div>
+
+const Wedge = (props) =>
+  <div style={{background: colorFromAngle(props.step * props.angle), clipPath: clip(props.angle)}}> </div>
 
 const colorFromAngle = (angle) => {
   const scaleWith = (val) => (val % 1) * 100
@@ -34,21 +48,8 @@ const colorFromAngle = (angle) => {
   return `rgb(${r}%, ${g}%, ${b}%)`;
 }
 
-const Wedge = (props) => <div style={{backgroundColor: colorFromAngle(props.step * props.angle), clipPath: clip(props.angle)}}> </div>
+const clip = (angle) =>`polygon(50% 50%, 100% 50%, ${fromEuc(Math.cos(angle))}% ${fromEuc(-Math.sin(angle))}%)`
 
-const Rotate = (props) =>
-  <div style={{transform: `rotate(${props.angle}rad)`}} >{props.children}</div>
-
-const Wheel = (props) =>
-  <div className="wheel">
-  {Array.repeat(props.sections, 2 * Math.PI / props.sections)
-    .map((a, i) =>
-        <Rotate angle={a * -(i - 0.5)}>
-            <Wedge step={i} angle={a} />
-        </Rotate>)}
-  </div>
-
-const Picker = () =>
-  <Wheel sections={48} />
+const fromEuc = (val) => 50 + val * 50
 
 export default Picker;
