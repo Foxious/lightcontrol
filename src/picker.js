@@ -17,13 +17,10 @@ const fromEuc = (val) => 50 + val * 50
 const clip = (angle) =>`polygon(50% 50%, 100% 50%, ${fromEuc(Math.cos(angle))}% ${fromEuc(-Math.sin(angle))}%)`
 
 const colorFromAngle = (step, angle) => {
-  const h = 2 * Math.PI / 6;
-  const hc = (step * angle) / h;
-  console.log("hc is ", hc);
-
   const scaleWith = (val) => (val % 1) * 100
   const scaleAgainst = (val) => (1 - (val % 1)) * 100
 
+  const hc = (step * angle) / (2 * Math.PI / 6);
   let r = 0, b = 0, g = 0;
   if (hc < 1) {
     r = 100;
