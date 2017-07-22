@@ -2,7 +2,7 @@ import React from 'react';
 import ArrayPolyfill from './array';
 
 const Picker = () =>
-  <Wheel sections={360} />
+  <Wheel sections={64} />
 
 const Wheel = (props) =>
   <div className="wheel">
