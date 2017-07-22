@@ -5,8 +5,7 @@ import Drag from './drag';
 
 document.addEventListener('DOMContentLoaded', function() {
   ReactDOM.render(
-    <Drag><div style={{background: '#ff0000'}} /></Drag>,
-    // <Picker />,
+    <Drag><Picker /></Drag>,
     document.getElementById('mount')
   );
 });

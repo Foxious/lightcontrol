@@ -11,7 +11,8 @@ const normalize = (v) => {
 const vecSubtract = (v1, v2) => vec(v1.x - v2.x, v1.y - v2.y)
 const dot = (v1, v2) => v1.x*v2.x + v1.y*v2.y
 const cross = (v1, v2) => v1.x*v2.y - v1.y*v2.x
-const direction = (v1, v2) => Math.sign(Math.asin(cross(v1, v2)))
+const direction = (v1, v2) => ((d) => d > 0 ? 1 : -1)
+                                (Math.asin(cross(v1, v2)))
 
 export default class Drag extends React.Component {
   constructor(props) {
@@ -22,10 +23,13 @@ export default class Drag extends React.Component {
 
     this.lastRotate = 0;
 
-    let rotate;
+    let rotate, dragCallback;
 
-    this.clearRotate = () => { rotate = () => 0 }
-    this.clearRotate();
+    this.reset = () => {
+      rotate = () => 0;
+      dragCallback = () => {}
+    }
+    this.reset();
     this.vec = (p2) => vecSubtract(p2, this.center);
 
     const startRotation = (to) =>
@@ -37,18 +41,24 @@ export default class Drag extends React.Component {
     this.dragStart = (e) => {
       console.log('event start:', e.clientX, e.clientY);
       rotate = startRotation(vec(e.clientX, e.clientY));
+      dragCallback = this.handleDrag;
     }
 
     this.dragEnd = () => {
       this.lastRotate = this.state.rotation;
-      this.clearRotate();
+      this.reset();
     }
 
     this.handleDrag = (e) =>
       ((click) =>
-        this.setState((prev) =>{
+        this.setState((prev) => {
           return {rotation: this.lastRotate + rotate(click)}
       }))(vec(e.clientX, e.clientY))
+
+    this.doDrag = (e) => {
+      e.preventDefault();
+      dragCallback(e);
+    }
   }
 
   componentDidMount() {
@@ -56,9 +66,10 @@ export default class Drag extends React.Component {
     this.center = vec(bounds.left + bounds.width * 0.5, bounds.top + bounds.height * 0.5);
     console.log(this.center);
     window.addEventListener('mouseup', () => { this.dragEnd() }, false);
+    window.addEventListener('mousemove', (e) => { this.doDrag(e) }, false);
   }
 
   render() {
-    return <div ref={(ref) => this.element = ref} className="wheel" style={{transform: `rotate(${this.state.rotation}rad)`}} onMouseMove={this.handleDrag} onMouseDown={this.dragStart} >{this.props.children}</div>
+    return <div ref={(ref) => this.element = ref} className="wheel" style={{transform: `rotate(${this.state.rotation}rad)`}} onMouseDown={this.dragStart} >{this.props.children}</div>
   }
 }

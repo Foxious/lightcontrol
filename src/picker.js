@@ -2,7 +2,7 @@ import React from 'react';
 import ArrayPolyfill from './array';
 
 const Picker = () =>
-  <Wheel sections={64} />
+  <Wheel sections={360} />
 
 const Wheel = (props) =>
   <div className="wheel">
@@ -17,7 +17,7 @@ const Rotate = (props) =>
   <div style={{transform: `rotate(${props.angle}rad)`}} >{props.children}</div>
 
 const Wedge = (props) =>
-  <div style={{background: colorFromAngle(props.step * props.angle), clipPath: clip(props.angle)}}> </div>
+  <div style={{background: colorFromAngle(props.step * props.angle), clipPath: clip(props.angle)}} onMouseDown={(e) => e.preventDefault() }> </div>
 
 const colorFromAngle = (angle) => {
   const scaleWith = (val) => (val % 1) * 100
